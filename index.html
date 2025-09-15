@@ -335,25 +335,7 @@
     </div>
     
     <script>
-        // 書類種別データ
-        const documentData = {
-            '口座振替': [
-                { type: 'updated', icon: '🔴', text: '印鑑の濃さを必ず確認（薄い場合は拡大して判読可否をチェック）' },
-                { type: 'warning', icon: '🟡', text: '住所欄：番地の略字（1-2-3）は不可、丁目略字（1丁目→1丁）は可' },
-                { type: '', icon: '🔴', text: '訂正箇所には必ず訂正印が必要（二重線のみは不可）' },
-                { type: 'info', icon: '🔵', text: '電話番号は市外局番から記載（090-××××-××××形式）' }
-            ],
-            '再発行': [
-                { type: '', icon: '🔴', text: '生年月日は和暦で記載（令和6年 = 2024年）' },
-                { type: 'warning', icon: '🟡', text: '職業欄：「会社員」「公務員」など具体的に記載' },
-                { type: 'info', icon: '🔵', text: '緊急連絡先は申請者と別の方の記載が必要' }
-            ],
-            '暗証番号': [
-                { type: 'updated', icon: '🔴', text: '提出期限：事実発生から14日以内（土日祝日を除く）' },
-                { type: '', icon: '🔴', text: '添付書類の有無を必ず確認（チェックリスト参照）' },
-                { type: 'warning', icon: '🟡', text: '代理人申請の場合は委任状が必要' }
-            ]
-        };
+        
         
         // ヘルプメッセージ
         const helpMessages = {
@@ -363,31 +345,52 @@
             '記入漏れ': '1. 必須項目リストと照合\n2. 空欄は×印で確認\n3. 意図的な空欄は「該当なし」記載\n4. 不明な項目は保留'
         };
         
-        function selectDocument(docType) {
-            // ボタンの状態更新
-            document.querySelectorAll('.doc-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // 選択された書類名を更新
-            document.getElementById('selected-doc').textContent = docType;
-            
-            // チェックポイントを更新
-            const checkpointList = document.getElementById('checkpoint-list');
-            const checkpoints = documentData[docType] || [];
-            
-            checkpointList.innerHTML = '';
-            checkpoints.forEach(checkpoint => {
-                const div = document.createElement('div');
-                div.className = `checkpoint-item ${checkpoint.type}`;
-                div.innerHTML = `
-                    <span class="checkpoint-icon">${checkpoint.icon}</span>
-                    <span class="checkpoint-text">${checkpoint.text}</span>
-                `;
-                checkpointList.appendChild(div);
+       function selectDocument(docType) {
+        // ボタンの状態更新
+        document.querySelectorAll('.doc-button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+
+        // 表示を更新
+        document.getElementById('selected-doc').textContent = docType;
+
+        // JSONベースのチェックリストを描画
+        const checkpointList = document.getElementById('checkpoint-list');
+        checkpointList.innerHTML = ''; // 初期化
+
+        const docData = checksData[docType];
+
+        if (!docData) return;
+
+        for (const 項目名 in docData) {
+            const チェック項目リスト = docData[項目名];
+
+            チェック項目リスト.forEach(item => {
+            const div = document.createElement('div');
+
+            // 重要度に応じてクラスとアイコン切替
+            let typeClass = '';
+            let icon = '🔴';
+            if (item.重要度 === '注意') {
+                typeClass = 'warning';
+                icon = '🟡';
+            } else if (item.重要度 === '参考') {
+                typeClass = 'info';
+                icon = '🔵';
+            }
+
+            div.className = `checkpoint-item ${typeClass}`;
+            div.innerHTML = `
+                <span class="checkpoint-icon">${icon}</span>
+                <span class="checkpoint-text">【${項目名}】${item.内容}</span>
+            `;
+            checkpointList.appendChild(div);
             });
         }
+        }
+
+
         
         function showHelp(helpType) {
             const message = helpMessages[helpType];
@@ -421,5 +424,28 @@
         updateTime();
         setInterval(updateTime, 60000); // 1分ごとに更新
     </script>
+      <!-- 他のscriptやHTMLがあって -->
+
+  <script>
+    let checksData = {};
+
+    // JSONファイルを読み込む
+    fetch('./data/checks.json')
+      .then(response => response.json())
+      .then(data => {
+        checksData = data;
+        console.log("読み込み完了", checksData);
+
+        selectDocument('口座振替');
+
+        // ここで初期化関数を呼んでもOK（例: 初期表示とか）
+      })
+      .catch(error => {
+        console.error('JSON読み込み失敗:', error);
+      });
+  </script>
+
+
+
 </body>
 </html>
