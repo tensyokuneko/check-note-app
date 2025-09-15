@@ -287,7 +287,7 @@
             <!-- チェックポイント表示 -->
             <div class="checkpoints">
                 <div class="checkpoints-title">
-                    ⚠️ チェックポイント<span class="document-name" id="selected-doc">申請書A</span>
+                    ⚠️ チェックポイント<span class="document-name" id="selected-doc">口座振替</span>
                 </div>
                 <div class="checkpoint-list" id="checkpoint-list">
                     <div class="checkpoint-item updated">
@@ -329,7 +329,7 @@
     <!-- デモ用コントロール -->
     <div class="simulation-controls">
         <h3>🎮 動作確認</h3>
-        <button class="control-button" onclick="selectDocument('申請書B')">書類種別変更</button>
+        <button class="control-button" onclick="selectDocument('再発行')">書類種別変更</button>
         <button class="control-button" onclick="showHelp('印鑑薄い')">ヘルプ表示</button>
         <button class="control-button" onclick="resetDemo()">リセット</button>
     </div>
@@ -337,18 +337,18 @@
     <script>
         // 書類種別データ
         const documentData = {
-            '申請書A': [
+            '口座振替': [
                 { type: 'updated', icon: '🔴', text: '印鑑の濃さを必ず確認（薄い場合は拡大して判読可否をチェック）' },
                 { type: 'warning', icon: '🟡', text: '住所欄：番地の略字（1-2-3）は不可、丁目略字（1丁目→1丁）は可' },
                 { type: '', icon: '🔴', text: '訂正箇所には必ず訂正印が必要（二重線のみは不可）' },
                 { type: 'info', icon: '🔵', text: '電話番号は市外局番から記載（090-××××-××××形式）' }
             ],
-            '申請書B': [
+            '再発行': [
                 { type: '', icon: '🔴', text: '生年月日は和暦で記載（令和6年 = 2024年）' },
                 { type: 'warning', icon: '🟡', text: '職業欄：「会社員」「公務員」など具体的に記載' },
                 { type: 'info', icon: '🔵', text: '緊急連絡先は申請者と別の方の記載が必要' }
             ],
-            '届出書C': [
+            '暗証番号': [
                 { type: 'updated', icon: '🔴', text: '提出期限：事実発生から14日以内（土日祝日を除く）' },
                 { type: '', icon: '🔴', text: '添付書類の有無を必ず確認（チェックリスト参照）' },
                 { type: 'warning', icon: '🟡', text: '代理人申請の場合は委任状が必要' }
@@ -397,7 +397,7 @@
         }
         
         function resetDemo() {
-            selectDocument('申請書A');
+            selectDocument('口座振替');
             document.querySelectorAll('.doc-button').forEach(btn => {
                 btn.classList.remove('active');
             });
