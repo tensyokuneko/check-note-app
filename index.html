@@ -279,17 +279,26 @@
           <div class="document-buttons">
             <button
               class="doc-button recent active"
-              onclick="selectDocument('口座振替')"
+              onclick="selectDocument('口座振替', event)"
             >
               口座振替
             </button>
-            <button class="doc-button" onclick="selectDocument('再発行')">
+            <button
+              class="doc-button"
+              onclick="selectDocument('再発行', event)"
+            >
               再発行
             </button>
-            <button class="doc-button" onclick="selectDocument('暗証番号')">
+            <button
+              class="doc-button"
+              onclick="selectDocument('暗証番号', event)"
+            >
               暗証番号
             </button>
-            <button class="doc-button" onclick="selectDocument('その他')">
+            <button
+              class="doc-button"
+              onclick="selectDocument('その他', event)"
+            >
               その他
             </button>
           </div>
@@ -382,7 +391,7 @@
           "1. 必須項目リストと照合\n2. 空欄は×印で確認\n3. 意図的な空欄は「該当なし」記載\n4. 不明な項目は保留",
       };
 
-      function selectDocument(docType) {
+      function selectDocument(docType, event) {
         // ボタンの状態更新
         document.querySelectorAll(".doc-button").forEach((btn) => {
           btn.classList.remove("active");
@@ -409,6 +418,9 @@
           } else if (item.重要度 === "参考") {
             typeClass = "info";
             icon = "🔵";
+          } else if (item.重要度 === "必須") {
+            typeClass = "";
+            icon = "🔴";
           }
 
           const div = document.createElement("div");
@@ -458,7 +470,7 @@
     <!-- 他のscriptやHTMLがあって -->
 
     <script>
-      let checksData = {};
+      let checksData = [];
 
       // JSONファイルを読み込む
       fetch("./data/checks.json")
@@ -467,9 +479,8 @@
           checksData = data;
           console.log("読み込み完了", checksData);
 
-          selectDocument("口座振替");
+         
 
-          // ここで初期化関数を呼んでもOK（例: 初期表示とか）
         })
         .catch((error) => {
           console.error("JSON読み込み失敗:", error);
