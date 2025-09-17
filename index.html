@@ -412,46 +412,39 @@
 ];
 
       function selectDocument(docType, event) {
-        // ボタンの状態更新
-        document.querySelectorAll(".doc-button").forEach((btn) => {
-          btn.classList.remove("active");
-        });
-        event.target.classList.add("active");
+  // ボタンの状態更新
+  document.querySelectorAll(".doc-button").forEach((btn) => {
+    btn.classList.remove("active");
+  });
+  event.target.classList.add("active");
 
-        // 表示を更新
-        document.getElementById("selected-doc").textContent = docType;
+  // 表示を更新
+  document.getElementById("selected-doc").textContent = docType;
 
-        // チェックポイント表示を初期化
-        const checkpointList = document.getElementById("checkpoint-list");
-        checkpointList.innerHTML = "";
+  // チェックポイントをクリア
+  const checkpointList = document.getElementById("checkpoint-list");
+  checkpointList.innerHTML = "";
 
-        // フィルタ処理：指定の書類だけ取り出す
-        const filtered = checksData.filter((item) => item.書類名 === docType);
+  // 項目選択エリアを表示
+  document.getElementById("item-selector").style.display = "block";
 
-        // 表示処理
-        filtered.forEach((item) => {
-          let typeClass = "";
-          let icon = "🔴";
-          if (item.重要度 === "注意") {
-            typeClass = "warning";
-            icon = "🟡";
-          } else if (item.重要度 === "参考") {
-            typeClass = "info";
-            icon = "🔵";
-          } else if (item.重要度 === "必須") {
-            typeClass = "";
-            icon = "🔴";
-          }
+  // 該当する項目を取得（重複を削除）
+  const items = [...new Set(checksData
+    .filter(item => item.書類名 === docType)
+    .map(item => item.項目))];
 
-          const div = document.createElement("div");
-          div.className = `checkpoint-item ${typeClass}`;
-          div.innerHTML = `
-            <span class="checkpoint-icon">${icon}</span>
-            <span class="checkpoint-text">【${item.項目}】${item.内容}</span>
-            `;
-          checkpointList.appendChild(div);
-        });
-      }
+  // 項目ボタンを生成
+  const itemButtons = document.getElementById("item-buttons");
+  itemButtons.innerHTML = "";
+
+  items.forEach(itemName => {
+    const button = document.createElement("button");
+    button.className = "doc-button";
+    button.textContent = itemName;
+    button.onclick = (event) => selectItem(docType, itemName, event);
+    itemButtons.appendChild(button);
+  });
+}
 
       function showHelp(helpType) {
         const message = helpMessages[helpType];
