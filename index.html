@@ -264,6 +264,18 @@
         background: #3498db;
         color: white;
       }
+
+      .doc-button:not(.active) {
+        background: #f0f0f0;
+        color: #999;
+        border-color: #ddd;
+        }
+
+        .doc-button:not(.active):hover {
+        background: #e8e8e8;
+        color: #666;
+        border-color: #ccc;
+        }
     </style>
   </head>
   <body>
@@ -341,6 +353,11 @@
               記入漏れ？
             </button>
           </div>
+        <!-- ヘルプ内容表示エリアを追加 -->
+        <div id="help-content" style="display: none; margin-top: 15px; padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 4px;">
+            <div id="help-text"></div>
+            <button onclick="hideHelp()" style="margin-top: 10px; padding: 5px 10px; background: #3498db; color: white; border: none; border-radius: 3px; cursor: pointer;">閉じる</button>
+
         </div>
       </div>
 
@@ -502,9 +519,14 @@ filtered.forEach((item) => {
       function showHelp(helpType) {
         const message = helpMessages[helpType];
         if (message) {
-          alert(`💡 ${helpType}の対処法:\n\n${message}`);
+            document.getElementById('help-text').innerHTML = `<strong>💡 ${helpType}の対処法:</strong><br><br>${message.replace(/\n/g, '<br>')}`;
+            document.getElementById('help-content').style.display = 'block';
         }
-      }
+        }
+
+        function hideHelp() {
+        document.getElementById('help-content').style.display = 'none';
+        }
 
       function resetDemo() {
         selectDocument("口座振替");
@@ -533,7 +555,7 @@ filtered.forEach((item) => {
       updateTime();
       setInterval(updateTime, 60000); // 1分ごとに更新
     </script>
-    <!-- 他のscriptやHTMLがあって -->
+    
 
     
      
