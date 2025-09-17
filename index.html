@@ -157,12 +157,14 @@
         border-radius: 8px;
       }
 
-      .checkpoint-icon {
+     .checkpoint-icon {
         display: inline-block;
-        width: 16px;
+        width: auto;
+        min-width: 50px;
         margin-right: 8px;
         font-weight: bold;
-      }
+        text-align: left;
+        }
 
       .checkpoint-text {
         font-size: 13px;
@@ -466,19 +468,19 @@ function selectItem(docType, itemType, event) {
   );
 
   // 表示処理
-  filtered.forEach((item) => {
-    let typeClass = "";
-    let icon = "🔴";
-    if (item.重要度 === "注意") {
-      typeClass = "warning";
-      icon = "🟡";
-    } else if (item.重要度 === "参考") {
-      typeClass = "info";
-      icon = "🔵";
-    } else if (item.重要度 === "必須") {
-      typeClass = "";
-      icon = "🔴";
-    }
+filtered.forEach((item) => {
+  let typeClass = "";
+  let icon = "【不備】";
+  if (item.重要度 === "注意") {
+    typeClass = "warning";
+    icon = "【補正】";
+  } else if (item.重要度 === "参考") {
+    typeClass = "info";
+    icon = "【参考】";
+  } else if (item.重要度 === "必須") {
+    typeClass = "";
+    icon = "【不備】";
+  }
 
     const div = document.createElement("div");
     div.className = `checkpoint-item ${typeClass}`;
