@@ -265,21 +265,37 @@
         color: white;
       }
 
-      .doc-button:not(.active) {
+      #item-buttons.has-selection .doc-button:not(.active) {
         background: #f0f0f0;
         color: #999;
         border-color: #ddd;
         }
 
-        .doc-button:not(.active):hover {
+        #item-buttons.has-selection .doc-button:not(.active):hover {
         background: #e8e8e8;
         color: #666;
         border-color: #ccc;
         }
+
+        .document-selector.has-selection .doc-button:not(.active) {
+        background: #f0f0f0;
+        color: #999;
+        border-color: #ddd;
+        }
+
+        .document-selector.has-selection .doc-button:not(.active):hover {
+        background: #e8e8e8;
+        color: #666;
+        border-color: #ccc;
+        }
+
+        .checkpoint-item:not(.warning):not(.info) .checkpoint-icon {
+        color: #e74c3c;
+        }
     </style>
   </head>
   <body>
-    <div class="demo-overlay">📱 PC並列表示デモ</div>
+    
 
     <div class="container">
       <div class="header">
@@ -311,9 +327,9 @@
             </button>
             <button
               class="doc-button"
-              onclick="selectDocument('その他', event)"
+              onclick="selectDocument('カード', event)"
             >
-              その他
+              カード
             </button>
           </div>
         </div>
@@ -428,6 +444,11 @@
   { "書類名": "暗証番号", "項目": "氏名", "内容": "氏名欄にない場合は備考欄を参照", "重要度": "参考" },
   { "書類名": "暗証番号", "項目": "住所", "内容": "登録内容と同様か？", "重要度": "必須" },
   { "書類名": "暗証番号", "項目": "住所", "内容": "番地・マンション名の省略可", "重要度": "参考" }
+
+  { "書類名": "カード", "項目": "氏名", "内容": "漢字氏名が正しいか？", "重要度": "必須" },
+  { "書類名": "カード", "項目": "氏名", "内容": "氏名欄にない場合は備考欄を参照", "重要度": "参考" },
+  { "書類名": "カード", "項目": "住所", "内容": "登録内容と同様か？", "重要度": "必須" },
+  { "書類名": "カード", "項目": "住所", "内容": "番地・マンション名の省略可", "重要度": "参考" }
 ];
 
       function selectDocument(docType, event) {
@@ -436,6 +457,9 @@
     btn.classList.remove("active");
   });
   event.target.classList.add("active");
+
+  // 選択状態クラスを追加
+  document.querySelector(".document-selector").classList.add("has-selection");
 
   // 表示を更新
   document.getElementById("selected-doc").textContent = docType;
@@ -471,6 +495,9 @@ function selectItem(docType, itemType, event) {
     btn.classList.remove("active");
   });
   event.target.classList.add("active");
+
+  // 選択状態クラスを追加
+  document.getElementById("item-buttons").classList.add("has-selection");
 
   // 表示を更新（書類名 + 項目名）
   document.getElementById("selected-doc").textContent = docType + " - " + itemType;
