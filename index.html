@@ -446,6 +446,51 @@
   });
 }
 
+function selectItem(docType, itemType, event) {
+  // 項目ボタンの状態更新
+  document.querySelectorAll("#item-buttons .doc-button").forEach((btn) => {
+    btn.classList.remove("active");
+  });
+  event.target.classList.add("active");
+
+  // 表示を更新（書類名 + 項目名）
+  document.getElementById("selected-doc").textContent = docType + " - " + itemType;
+
+  // チェックポイント表示を初期化
+  const checkpointList = document.getElementById("checkpoint-list");
+  checkpointList.innerHTML = "";
+
+  // フィルタ処理：書類名 + 項目名で絞り込み
+  const filtered = checksData.filter((item) => 
+    item.書類名 === docType && item.項目 === itemType
+  );
+
+  // 表示処理
+  filtered.forEach((item) => {
+    let typeClass = "";
+    let icon = "🔴";
+    if (item.重要度 === "注意") {
+      typeClass = "warning";
+      icon = "🟡";
+    } else if (item.重要度 === "参考") {
+      typeClass = "info";
+      icon = "🔵";
+    } else if (item.重要度 === "必須") {
+      typeClass = "";
+      icon = "🔴";
+    }
+
+    const div = document.createElement("div");
+    div.className = `checkpoint-item ${typeClass}`;
+    div.innerHTML = `
+      <span class="checkpoint-icon">${icon}</span>
+      <span class="checkpoint-text">${item.内容}</span>
+      `;
+    checkpointList.appendChild(div);
+  });
+}
+
+
       function showHelp(helpType) {
         const message = helpMessages[helpType];
         if (message) {
