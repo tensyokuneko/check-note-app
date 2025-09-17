@@ -280,7 +280,7 @@
           <div class="selector-title">📄 チェック中の書類種別</div>
           <div class="document-buttons">
             <button
-              class="doc-button recent active"
+              class="doc-button  active"
               onclick="selectDocument('口座振替', event)"
             >
               口座振替
@@ -466,6 +466,12 @@ function selectItem(docType, itemType, event) {
   const filtered = checksData.filter((item) => 
     item.書類名 === docType && item.項目 === itemType
   );
+
+  // 重要度順にソート（必須→注意→参考）
+filtered.sort((a, b) => {
+  const order = { "必須": 1, "注意": 2, "参考": 3 };
+  return order[a.重要度] - order[b.重要度];
+});
 
   // 表示処理
 filtered.forEach((item) => {
