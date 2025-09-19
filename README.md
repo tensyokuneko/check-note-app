@@ -7,7 +7,7 @@
 
 ## URL
 
-）
+https://github.com/tensyokuneko/check-note-app
 
 ## 利用方法
 
