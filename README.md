@@ -58,6 +58,5 @@ cd リポジトリ名
 
 ## 画面イメージ
 ![サンプル画面]
-```bash
 (https://gyazo.com/faf04c30bd924cd201b853f9a89c0d22)
 ```
