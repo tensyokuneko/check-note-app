@@ -52,9 +52,12 @@
 
 ```bash
 git clone https://github.com/tensyokuneko/check-note-app
+
 cd リポジトリ名
 # index.html をブラウザで開く
 
 ## 画面イメージ
-![サンプル画面](https://gyazo.com/faf04c30bd924cd201b853f9a89c0d22)
+![サンプル画面]
+```bash
+(https://gyazo.com/faf04c30bd924cd201b853f9a89c0d22)
 ```
