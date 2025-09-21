@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "electron-builder",
     "build-win": "electron-builder --win",
-    "dist": "electron-builder --publish=never"
+    "dist": "electron-builder --publish=never",
+    "pack": "electron-packager . 作業チェックノート --platform=win32 --arch=x64 --out=dist --overwrite"
   },
   "build": {
     "appId": "com.example.check-note-app",
@@ -17,19 +18,23 @@
       "output": "dist"
     },
     "files": [
-      "**/*",
-      "!node_modules/**/*"
+      "index.html",
+      "main.js",
+      "package.json"
     ],
     "win": {
-      "target": "portable"
+      "target": "dir"
     }
-    
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tensyokuneko/check-note-app.git"
   },
-  "keywords": ["electron", "checklist", "note"],
+  "keywords": [
+    "electron",
+    "checklist",
+    "note"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -39,6 +44,7 @@
   "devDependencies": {
     "electron": "^38.1.1",
     "electron-builder": "^26.0.12",
+    "electron-packager": "^17.1.2",
     "install": "^0.13.0"
   }
 }
