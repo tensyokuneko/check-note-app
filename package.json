@@ -1,17 +1,38 @@
 {
   "name": "check-note-app",
   "version": "1.0.0",
-  "description": "## アプリケーション概要",
+  "description": "作業チェックノートアプリ",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder",
+    "build-win": "electron-builder --win",
+    "dist": "electron-builder --publish=never"
+  },
+  "build": {
+    "appId": "com.example.check-note-app",
+    "productName": "作業チェックノート",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/**/*"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tensyokuneko/check-note-app.git"
   },
-  "keywords": [],
+  "keywords": ["electron", "checklist", "note"],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -19,6 +40,8 @@
   },
   "homepage": "https://github.com/tensyokuneko/check-note-app#readme",
   "devDependencies": {
-    "electron": "^38.1.1"
+    "electron": "^38.1.1",
+    "electron-builder": "^26.0.12",
+    "install": "^0.13.0"
   }
 }
