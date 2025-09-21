@@ -360,31 +360,10 @@
       </div>
     </div>
 
-    <!-- デモ用コントロール -->
-    <div class="simulation-controls">
-      <h3>🎮 動作確認</h3>
-      <button class="control-button" onclick="selectDocument('再発行')">
-        書類種別変更
-      </button>
-      <button class="control-button" onclick="showHelp('印鑑薄い')">
-        ヘルプ表示
-      </button>
-      <button class="control-button" onclick="resetDemo()">リセット</button>
-    </div>
+   
 
     <script>
-      // ヘルプメッセージ
-      const helpMessages = {
-        印鑑薄い:
-          "1. まず拡大表示で確認\n2. 文字が判読可能→OK\n3. 判読不可能→保留\n4. 不明な場合は田中さんに相談",
-        字が読めない:
-          "1. 前後の文脈から推測\n2. 住所なら地名辞書で確認\n3. 人名なら常用漢字から推測\n4. それでも不明→保留",
-        訂正方法:
-          "1. 二重線＋訂正印→OK\n2. 二重線のみ→NG\n3. 修正液・修正テープ→NG\n4. 正しい訂正印の例を確認",
-        記入漏れ:
-          "1. 必須項目リストと照合\n2. 空欄は×印で確認\n3. 意図的な空欄は「該当なし」記載\n4. 不明な項目は保留",
-      };
-
+      
       const checksData = [
   { "書類名": "口座振替", "項目": "フリガナ", "内容": "漢字氏名は登録したフリガナと同様か？", "重要度": "必須" },
   { "書類名": "口座振替", "項目": "フリガナ", "内容": "フリガナの中に漢字が書かれていないか？", "重要度": "必須" },
@@ -518,26 +497,7 @@ filtered.forEach((item) => {
 }
 
 
-      function showHelp(helpType) {
-        const message = helpMessages[helpType];
-        if (message) {
-            document.getElementById('help-text').innerHTML = `<strong>💡 ${helpType}の対処法:</strong><br><br>${message.replace(/\n/g, '<br>')}`;
-            document.getElementById('help-content').style.display = 'block';
-        }
-        }
-
-        function hideHelp() {
-        document.getElementById('help-content').style.display = 'none';
-        }
-
-      function resetDemo() {
-        selectDocument("口座振替");
-        document.querySelectorAll(".doc-button").forEach((btn) => {
-          btn.classList.remove("active");
-        });
-        document.querySelector(".doc-button").classList.add("active");
-      }
-
+      
       // 現在時刻の更新
       function updateTime() {
         const now = new Date();
