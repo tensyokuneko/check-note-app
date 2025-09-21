@@ -21,12 +21,9 @@
       "!node_modules/**/*"
     ],
     "win": {
-      "target": "nsis"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "target": "portable"
     }
+    
   },
   "repository": {
     "type": "git",
