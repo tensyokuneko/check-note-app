@@ -41,4 +41,4 @@
 - Windows 11
 
 ## 画面イメージ
-![サンプル画面](https://gyazo.com/faf04c30bd924cd201b853f9a89c0d22)
+![サンプル画面][(https://gyazo.com/faf04c30bd924cd201b853f9a89c0d22)](https://gyazo.com/17fdd3e54d04a645b732eed8e195fe84)
